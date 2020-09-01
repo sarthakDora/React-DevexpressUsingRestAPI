@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import { Card, CardContent} from "@material-ui/core";
+import Table from './Table.js'
+
 
 function App() {
+
+  // const [menus, setMenus] = useState({});
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(()=>{
+    
+       fetch("https://us-central1-fir-func-api-spdora.cloudfunctions.net/starter_v/")
+      .then(res => res.json())
+      .then(data => {
+        // setMenus(data)
+        setTableData(data);
+      })
+    
+   
+  
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Project to consume REST API</h1>
+      <Card className="app__right">
+        <CardContent>
+     
+          <Table items = {tableData}/>
+         
+        </CardContent>
+
+    </Card>
     </div>
   );
 }
